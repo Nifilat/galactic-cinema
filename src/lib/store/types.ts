@@ -2,6 +2,7 @@ export interface User {
   id: string;
   username: string;
   email?: string;
+  password: string;
 }
 
 export interface AuthState {
@@ -9,6 +10,7 @@ export interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
+  users: User[];
 }
 
 export interface LoginCredentials {

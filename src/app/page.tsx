@@ -2,11 +2,12 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '../hooks/useAuth';
+import { RootState } from '@/lib/store';
 import LoadingSpinner from '../components/movies/LoadingSpinner';
+import { useSelector } from 'react-redux';
 
 export default function HomePage() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   const router = useRouter();
 
   useEffect(() => {
