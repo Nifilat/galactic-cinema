@@ -7,35 +7,34 @@ const initialState: MoviesState = {
   error: null,
 };
 
-export const fetchMovies = createAsyncThunk(
-  'movies/fetchMovies',
-  async () => {
-    const response = await fetch('https://swapi.tech/api/films');
-    if (!response.ok) {
-      throw new Error('Failed to fetch movies');
-    }
-    const data: MoviesResponse = await response.json();
-    return data.result;
+export const fetchMovies = createAsyncThunk('movies/fetchMovies', async () => {
+  const response = await fetch('https://swapi.tech/api/films');
+  if (!response.ok) {
+    throw new Error('Failed to fetch movies');
   }
-);
+  const data: MoviesResponse = await response.json();
+  return data.result;
+});
 
 const moviesSlice = createSlice({
   name: 'movies',
   initialState,
   reducers: {
-    clearError: (state) => {
+    clearError: state => {
       state.error = null;
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(fetchMovies.pending, (state) => {
+      .addCase(fetchMovies.pending, state => {
         state.loading = true;
         state.error = null;
       })
       .addCase(fetchMovies.fulfilled, (state, action: PayloadAction<Movie[]>) => {
         state.loading = false;
-        state.movies = action.payload.sort((a, b) => a.properties.episode_id - b.properties.episode_id);
+        state.movies = action.payload.sort(
+          (a, b) => a.properties.episode_id - b.properties.episode_id
+        );
       })
       .addCase(fetchMovies.rejected, (state, action) => {
         state.loading = false;

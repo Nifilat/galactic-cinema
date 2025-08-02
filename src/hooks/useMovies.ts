@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { RootState, AppDispatch } from '../lib/store';
 import { fetchMovies, clearError } from '@/lib/store/movieSlice';
 
-
 export const useMovies = () => {
   const dispatch = useDispatch<AppDispatch>();
   const movies = useSelector((state: RootState) => state.movies);
