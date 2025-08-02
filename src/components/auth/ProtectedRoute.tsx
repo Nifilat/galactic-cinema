@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { useAuth } from '../../hooks/useAuth';
+import { RootState } from '@/lib/store';
+import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 
 interface ProtectedRouteProps {
@@ -9,7 +10,7 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+  const {isAuthenticated} = useSelector((state: RootState) => state.auth);
   const router = useRouter();
 
   useEffect(() => {
