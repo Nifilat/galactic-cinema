@@ -17,5 +17,5 @@ export default function HomePage() {
     }
   }, [isAuthenticated, router]);
 
-  return <LoadingSpinner size="lg" text="Redirecting..." />;
+  return <LoadingSpinner />;
 }

@@ -13,10 +13,7 @@ interface ProvidersProps {
 const Providers: React.FC<ProvidersProps> = ({ children }) => {
   return (
     <Provider store={store}>
-      <PersistGate
-        loading={<LoadingSpinner size="lg" text="Initializing app..." />}
-        persistor={persistor}
-      >
+      <PersistGate loading={<LoadingSpinner />} persistor={persistor}>
         {children}
       </PersistGate>
     </Provider>

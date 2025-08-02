@@ -1,0 +1,44 @@
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import Providers from './providers';
+import { Toaster } from '@/components/ui/sonner';
+// import Navbar from '../components/layout/Navbar';
+
+const inter = Inter({ subsets: ['latin'] });
+
+export const metadata: Metadata = {
+  title: 'Galactic Cinema - Star Wars Movie Portal',
+  description:
+    'Explore the complete Star Wars movie collection with detailed information about each film in the saga.',
+  keywords: 'Star Wars, movies, films, space, sci-fi, entertainment',
+  authors: [{ name: 'Galactic Cinema Team' }],
+  viewport: 'width=device-width, initial-scale=1',
+  robots: 'index, follow',
+  openGraph: {
+    title: 'Galactic Cinema - Star Wars Movie Portal',
+    description: 'Explore the complete Star Wars movie collection',
+    type: 'website',
+    locale: 'en_US',
+  },
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className="dark">
+      <body
+        className={`${inter.className} min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900`}
+      >
+        <Providers>
+          <div className="min-h-screen flex flex-col">
+            {/* <Navbar /> */}
+            <main className="flex-1" role="main">
+              {children}
+            </main>
+            <Toaster />
+          </div>
+        </Providers>
+      </body>
+    </html>
+  );
+}
