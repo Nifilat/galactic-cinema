@@ -1,6 +1,7 @@
+// __tests__/components/LoginContainer.test.tsx
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { Provider,  } from 'react-redux';
+import { Provider } from 'react-redux';
 import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
 import LoginContainer from '@/components/auth/LoginContainer';
 import { useRouter } from 'next/navigation';
@@ -10,21 +11,43 @@ jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
 
-const mockStore = configureStore([]);
+// Define proper types for your store state
+interface MockState {
+  auth: {
+    isAuthenticated: boolean;
+    username?: string;
+    token?: string | null;
+    error?: string | null;
+    loading?: boolean;
+  };
+}
+
+// ✅ Create typed mock store
+const mockStore = configureStore<MockState>([]);
 
 describe('LoginContainer', () => {
-  let store: MockStoreEnhanced<unknown, {}>;
+  let store: MockStoreEnhanced<MockState, object>;
   const push = jest.fn();
 
   beforeEach(() => {
     (useRouter as jest.Mock).mockReturnValue({ push });
+    
+    // ✅ Now the types match perfectly
     store = mockStore({
       auth: {
         isAuthenticated: false,
+        username: '',
+        token: null,
+        error: null,
+        loading: false,
       },
     });
-
+    
     store.dispatch = jest.fn();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('renders logo and login form', () => {
@@ -39,14 +62,19 @@ describe('LoginContainer', () => {
   });
 
   it('redirects if authenticated', () => {
-    store = mockStore({
+    // ✅ Create a new typed store instance for this specific test
+    const authenticatedStore = mockStore({
       auth: {
         isAuthenticated: true,
+        username: 'testuser',
+        token: 'mock-token',
+        error: null,
+        loading: false,
       },
     });
 
     render(
-      <Provider store={store}>
+      <Provider store={authenticatedStore}>
         <LoginContainer />
       </Provider>
     );
@@ -62,5 +90,88 @@ describe('LoginContainer', () => {
     );
 
     expect(store.dispatch).toHaveBeenCalledWith(clearError());
+  });
+
+  // Additional test cases for better coverage
+  // ✅ Removed loading state test since component doesn't implement it
+
+  it('displays error message when auth has error', () => {
+    const errorStore = mockStore({
+      auth: {
+        isAuthenticated: false,
+        username: '',
+        token: null,
+        error: 'Invalid credentials',
+        loading: false,
+      },
+    });
+
+    render(
+      <Provider store={errorStore}>
+        <LoginContainer />
+      </Provider>
+    );
+
+    expect(screen.getByText(/invalid credentials/i)).toBeInTheDocument();
+  });
+});
+
+// ✅ Alternative approach: Create a properly typed helper function
+export const createMockStore = (overrides: Partial<MockState> = {}): MockStoreEnhanced<MockState, object> => {
+  const defaultState: MockState = {
+    auth: {
+      isAuthenticated: false,
+      username: '',
+      token: null,
+      error: null,
+      loading: false,
+    },
+  };
+
+  const finalState = {
+    ...defaultState,
+    ...overrides,
+    auth: {
+      ...defaultState.auth,
+      ...overrides.auth,
+    },
+  };
+
+  return mockStore(finalState);
+};
+
+// Usage example with helper:
+describe('LoginContainer (with helper)', () => {
+  const push = jest.fn();
+
+  beforeEach(() => {
+    (useRouter as jest.Mock).mockReturnValue({ push });
+  });
+
+  it('works with helper function', () => {
+    const store = createMockStore();
+    store.dispatch = jest.fn();
+
+    render(
+      <Provider store={store}>
+        <LoginContainer />
+      </Provider>
+    );
+
+    expect(store.dispatch).toHaveBeenCalledWith(clearError());
+  });
+
+  it('handles authenticated state with helper', () => {
+    const store = createMockStore({
+      auth: { isAuthenticated: true, username: 'testuser' },
+    });
+
+    render(
+      <Provider store={store}>
+        <LoginContainer />
+      </Provider>
+    );
+
+    expect(push).toHaveBeenCalledWith('/movies');
   });
 });
