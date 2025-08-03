@@ -5,7 +5,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, registerSchema } from '@/utils/validation/authSchema';
 import { z } from 'zod';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '@/lib/store';
 import { login, updateUsers } from '@/lib/store/authSlice';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
