@@ -1,6 +1,7 @@
+import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
+import { Provider,  } from 'react-redux';
+import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
 import LoginContainer from '@/components/auth/LoginContainer';
 import { useRouter } from 'next/navigation';
 import { clearError } from '@/lib/store/authSlice';
@@ -12,7 +13,7 @@ jest.mock('next/navigation', () => ({
 const mockStore = configureStore([]);
 
 describe('LoginContainer', () => {
-  let store: any;
+  let store: MockStoreEnhanced<unknown, {}>;
   const push = jest.fn();
 
   beforeEach(() => {
