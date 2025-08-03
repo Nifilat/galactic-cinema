@@ -6,7 +6,7 @@ import { loginSchema, registerSchema } from '@/utils/validation/authSchema';
 import { z } from 'zod';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '@/lib/store';
-import { login, updateUsers,  } from '@/lib/store/authSlice';
+import { login, updateUsers } from '@/lib/store/authSlice';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -39,12 +39,11 @@ export default function LoginForm() {
 
   const handleLogin = async (data: z.infer<typeof loginSchema>) => {
     try {
-    const user = users.find(
+      const user = users.find(
         u =>
-          u.username.toLowerCase() === data.username.toLowerCase() &&
-          u.password === data.password
+          u.username.toLowerCase() === data.username.toLowerCase() && u.password === data.password
       );
-    
+
       if (!user) {
         throw new Error('Invalid username or password');
       }
@@ -62,8 +61,7 @@ export default function LoginForm() {
 
   const handleRegister = async (data: z.infer<typeof registerSchema>) => {
     try {
-
-      dispatch(updateUsers({...data, id: Date.now().toString()},))
+      dispatch(updateUsers({ ...data, id: Date.now().toString() }));
 
       toast('Registration successful', {
         description: 'Welcome to the Star Wars universe!',
