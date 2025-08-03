@@ -42,26 +42,26 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  
+
   /* Custom Star Wars colors */
-  --color-yellow-400: #FEEA3B;
-  --color-yellow-500: #FFD700;
-  --color-yellow-900: #332B00;
-  --color-gray-300: #D1D5DB;
-  --color-gray-400: #9CA3AF;
-  --color-gray-500: #6B7280;
-  --color-gray-600: #4B5563;
+  --color-yellow-400: #feea3b;
+  --color-yellow-500: #ffd700;
+  --color-yellow-900: #332b00;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
   --color-gray-700: #374151;
-  --color-gray-800: #1F2937;
+  --color-gray-800: #1f2937;
   --color-gray-900: #111827;
   --color-black: #000000;
-  
+
   /* Custom animations */
   --animate-fade-in: fadeIn 0.8s ease-out forwards;
   --animate-slide-up: slideUp 0.6s ease-out forwards;
   --animate-slide-down: slideDown 0.6s ease-out forwards;
   --animate-glow: glow 2s infinite alternate;
-  --animate-shake: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+  --animate-shake: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
 :root {
@@ -137,48 +137,68 @@
 
 /* Custom keyframes for Star Wars animations */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { 
-    opacity: 0; 
-    transform: translateY(20px); 
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  to { 
-    opacity: 1; 
-    transform: translateY(0); 
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @keyframes slideDown {
-  from { 
-    opacity: 0; 
-    transform: translateY(-20px); 
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
-  to { 
-    opacity: 1; 
-    transform: translateY(0); 
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @keyframes glow {
-  0% { 
-    text-shadow: 0 0 5px var(--color-yellow-400); 
+  0% {
+    text-shadow: 0 0 5px var(--color-yellow-400);
   }
-  50% { 
-    text-shadow: 0 0 15px var(--color-yellow-400), 0 0 25px var(--color-yellow-400); 
+  50% {
+    text-shadow:
+      0 0 15px var(--color-yellow-400),
+      0 0 25px var(--color-yellow-400);
   }
-  100% { 
-    text-shadow: 0 0 5px var(--color-yellow-400); 
+  100% {
+    text-shadow: 0 0 5px var(--color-yellow-400);
   }
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-  20%, 40%, 60%, 80% { transform: translateX(5px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
 }
 
 /* Custom utility classes */

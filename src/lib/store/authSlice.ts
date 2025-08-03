@@ -10,7 +10,6 @@ const initialState: AuthState = {
   users: mockUsers,
 };
 
-
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -20,7 +19,7 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.error = null;
     },
-    
+
     logout: state => {
       state.user = null;
       state.isAuthenticated = false;
@@ -30,13 +29,10 @@ const authSlice = createSlice({
       state.error = null;
     },
     updateUsers: (state, action: PayloadAction<User>) => {
-       state.users.push( action.payload );
-      
+      state.users.push(action.payload);
     },
-    
   },
-
 });
 
-export const { login, logout, clearError, updateUsers, } = authSlice.actions;
+export const { login, logout, clearError, updateUsers } = authSlice.actions;
 export default authSlice.reducer;

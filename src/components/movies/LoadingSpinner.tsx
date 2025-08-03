@@ -7,11 +7,11 @@ const LoadingSpinner: React.FC = () => {
         <div className="relative">
           {/* Spinning outer ring */}
           <div className="w-16 h-16 border-4 border-yellow-400/30 border-t-yellow-400 rounded-full animate-spin mx-auto mb-4"></div>
-          
+
           {/* Inner pulsing dot */}
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-yellow-400 rounded-full animate-pulse"></div>
         </div>
-        
+
         <svg
           viewBox="0 0 1347.6 227.4"
           className="h-12 w-auto text-yellow-400 mx-auto mb-4 animate-glow"
@@ -24,12 +24,18 @@ const LoadingSpinner: React.FC = () => {
             </g>
           </g>
         </svg>
-        
+
         <p className="text-gray-300 text-lg font-medium">Loading the galaxy...</p>
         <div className="mt-2 flex justify-center space-x-1">
           <div className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce"></div>
-          <div className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-          <div className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+          <div
+            className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce"
+            style={{ animationDelay: '0.1s' }}
+          ></div>
+          <div
+            className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce"
+            style={{ animationDelay: '0.2s' }}
+          ></div>
         </div>
       </div>
     </div>
