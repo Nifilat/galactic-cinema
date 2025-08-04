@@ -2,7 +2,7 @@ export default function Logo() {
   return (
     <svg
       viewBox="0 0 1347.6 227.4"
-      className="h-16 w-auto text-yellow-400 mx-auto mb-4 animate-glow"
+      className="h-6 sm:h-8 w-auto text-yellow-400 animate-glow"
       fill="currentColor"
     >
       <g>
