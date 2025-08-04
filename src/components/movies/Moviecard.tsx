@@ -17,7 +17,13 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Calendar, Info, User, Rocket, Car, Globe, Users } from 'lucide-react';
 import { useEntityNames } from '@/hooks/useMovies';
 import { MovieCardProps } from '@/types';
-import { formatDate, truncateText, getEpisodeTitle, getMoviePoster, getFullOpeningCrawl } from '@/utils';
+import {
+  formatDate,
+  truncateText,
+  getEpisodeTitle,
+  getMoviePoster,
+  getFullOpeningCrawl,
+} from '@/utils';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 
 const EntitySection = ({

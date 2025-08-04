@@ -7,29 +7,31 @@ interface LoadingSpinnerProps {
   text?: string;
 }
 
-const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ 
-  size = 'md', 
-  className = '', 
+const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
+  size = 'md',
+  className = '',
   showText = true,
-  text = 'Loading the galaxy...'
+  text = 'Loading the galaxy...',
 }) => {
   const sizeClasses = {
     sm: 'w-8 h-8',
     md: 'w-16 h-16',
-    lg: 'w-24 h-24'
+    lg: 'w-24 h-24',
   };
 
   const textSizeClasses = {
     sm: 'text-sm',
     md: 'text-lg',
-    lg: 'text-xl'
+    lg: 'text-xl',
   };
 
   return (
     <div className={`text-center animate-slide-up ${className}`}>
       <div className="relative">
         {/* Spinning outer ring */}
-        <div className={`${sizeClasses[size]} border-4 border-yellow-400/30 border-t-yellow-400 rounded-full animate-spin mx-auto mb-4`}></div>
+        <div
+          className={`${sizeClasses[size]} border-4 border-yellow-400/30 border-t-yellow-400 rounded-full animate-spin mx-auto mb-4`}
+        ></div>
 
         {/* Inner pulsing dot */}
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-yellow-400 rounded-full animate-pulse"></div>

@@ -30,12 +30,12 @@ const Providers: React.FC<ProvidersProps> = ({ children }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <PersistGate 
+        <PersistGate
           loading={
             <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
               <LoadingSpinner size="lg" />
             </div>
-          } 
+          }
           persistor={persistor}
         >
           {children}
