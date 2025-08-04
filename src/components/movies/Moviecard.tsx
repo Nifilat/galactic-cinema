@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -64,7 +65,7 @@ const EntitySection = ({
   type,
 }: {
   title: string;
-  icon: any;
+  icon: React.ElementType;
   urls: string[];
   type: string;
 }) => {
@@ -117,9 +118,11 @@ export function MovieCard({ movie }: MovieCardProps) {
       <div className="relative flex-1">
         {/* Movie poster background */}
         <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-300">
-          <img
+          <Image
             src={getMoviePoster(movie.episode_id, movie.title)}
             alt={`${movie.title} poster`}
+            width={500}
+            height={800}
             className="w-full h-full object-cover"
             crossOrigin="anonymous"
           />
@@ -173,9 +176,11 @@ export function MovieCard({ movie }: MovieCardProps) {
                 {/* Movie Poster */}
                 <div className="lg:col-span-2">
                   <div className="sticky top-4">
-                    <img
+                    <Image
                       src={getMoviePoster(movie.episode_id, movie.title)}
                       alt={`${movie.title} poster`}
+                      width={500}
+                      height={800}
                       className="w-full rounded-xl shadow-2xl shadow-yellow-400/10 border border-gray-700"
                       crossOrigin="anonymous"
                     />
