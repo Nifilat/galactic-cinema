@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { RootState } from '@/lib/store';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
-import LoadingSpinner from '@/components/movies/LoadingSpinner';
+import LoadingSpinner from '@/components/ui/loading-spinner';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -26,11 +26,19 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   }, [isAuthenticated, router]);
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
   }
 
   if (!isAuthenticated) {
-    return <LoadingSpinner />;
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
   }
 
   return <>{children}</>;

@@ -1,42 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-
-export interface Movie {
-  title: string;
-  episode_id: number;
-  opening_crawl: string;
-  release_date: string;
-  url: string;
-  director: string;
-  producer: string;
-  characters: string[];
-  starships: string[];
-  vehicles: string[];
-  planets: string[];
-  species: string[];
-  created: string;
-  edited: string;
-}
-
-interface SwapiResponse {
-  message: string;
-  result: Array<{
-    properties: Movie;
-    description: string;
-    _id: string;
-    uid: string;
-    __v: number;
-  }>;
-}
-
-interface ApiItem {
-  message: string;
-  result: {
-    properties: {
-      name: string;
-      [key: string]: unknown;
-    };
-  };
-}
+import { Movie, SwapiResponse, ApiItem } from '@/types';
 
 const fallbackMovies: Movie[] = [
   {

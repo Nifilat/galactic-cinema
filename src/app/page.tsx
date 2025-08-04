@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { RootState } from '@/lib/store';
-import LoadingSpinner from '../components/movies/LoadingSpinner';
+import LoadingSpinner from '../components/ui/loading-spinner';
 import { useSelector } from 'react-redux';
 
 export default function HomePage() {
@@ -18,5 +18,9 @@ export default function HomePage() {
     }
   }, [isAuthenticated, router]);
 
-  return <LoadingSpinner />;
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
+      <LoadingSpinner size="lg" />
+    </div>
+  );
 }

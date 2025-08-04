@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { MovieCard } from '../movies/Moviecard';
-import LoadingSpinner from '../movies/LoadingSpinner';
+import LoadingSpinner from '../ui/loading-spinner';
 import { Navigation } from './Navbar';
 import { useMovies } from '@/hooks/useMovies';
 import { toast } from 'sonner';
@@ -28,10 +28,12 @@ export default function MoviesPage() {
 
   if (isLoading) {
     return (
-      <>
+      <div className="min-h-screen bg-black">
         <Navigation />
-        <LoadingSpinner />
-      </>
+        <div className="flex items-center justify-center min-h-[80vh]">
+          <LoadingSpinner size="lg" />
+        </div>
+      </div>
     );
   }
 
@@ -46,7 +48,7 @@ export default function MoviesPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-fr">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {movies
             .sort((a, b) => a.episode_id - b.episode_id)
             .map((movie, index) => (

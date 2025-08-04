@@ -216,4 +216,21 @@ body {
     animation: slideUp 0.6s ease-out forwards;
     opacity: 0;
   }
+
+  /* Fix for max-width utilities being overridden */
+  .max-w-7xl {
+    max-width: 80rem !important;
+  }
+
+  .max-w-6xl {
+    max-width: 72rem !important;
+  }
+
+  .max-w-5xl {
+    max-width: 64rem !important;
+  }
+
+  .max-w-4xl {
+    max-width: 56rem !important;
+  }
 }
