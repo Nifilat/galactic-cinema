@@ -13,20 +13,9 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Calendar, Info, User, Rocket, Car, Globe, Users, Loader2 } from 'lucide-react';
-import { Movie, useEntityNames } from '@/hooks/useMovies';
-
-interface MovieCardProps {
-  movie: Movie;
-}
-
-const episodeTitles: Record<number, string> = {
-  1: 'Episode I',
-  2: 'Episode II',
-  3: 'Episode III',
-  4: 'Episode IV',
-  5: 'Episode V',
-  6: 'Episode VI',
-};
+import { useEntityNames } from '@/hooks/useMovies';
+import { MovieCardProps } from './types';
+import { episodeTitles } from '@/constants/episodeTitles';
 
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString('en-US', {
