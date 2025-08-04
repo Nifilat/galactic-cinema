@@ -45,8 +45,11 @@ const createWrapper = () => {
     },
   });
 
-  return ({ children }: { children: ReactNode }) =>
-    createElement(QueryClientProvider, { client: queryClient }, children);
+  function Wrapper({ children }: { children: ReactNode }) {
+    return createElement(QueryClientProvider, { client: queryClient }, children);
+  }
+  Wrapper.displayName = 'TestWrapper';
+  return Wrapper;
 };
 
 describe('useMovies', () => {

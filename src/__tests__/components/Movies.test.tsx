@@ -1,24 +1,28 @@
 import { render, screen } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { createElement } from 'react';
+import { ReactNode } from 'react';
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
+import MoviesPage from '@/components/layout/Movies';
 
 jest.mock('@/components/layout/Movies', () => ({
   __esModule: true,
-  default: () => createElement('div', { 'data-testid': 'movies-page' }, 'Movies Page Content'),
+  default: () => <div data-testid="movies-page">Movies Page Content</div>,
 }));
 
 jest.mock('@/components/auth/ProtectedRoute', () => ({
   __esModule: true,
-  default: ({ children }: { children: React.ReactNode }) =>
-    createElement('div', { 'data-testid': 'protected-route' }, children),
+  default: ({ children }: { children: ReactNode }) => (
+    <div data-testid="protected-route">{children}</div>
+  ),
 }));
 
-const Movies = () => {
-  const ProtectedRoute = require('@/components/auth/ProtectedRoute').default;
-  const MoviesPage = require('@/components/layout/Movies').default;
-
-  return createElement('div', {}, createElement(ProtectedRoute, {}, createElement(MoviesPage)));
-};
+function Movies() {
+  return (
+    <ProtectedRoute>
+      <MoviesPage />
+    </ProtectedRoute>
+  );
+}
 
 const createWrapper = () => {
   const queryClient = new QueryClient({
@@ -29,26 +33,30 @@ const createWrapper = () => {
     },
   });
 
-  return ({ children }: { children: React.ReactNode }) =>
-    createElement(QueryClientProvider, { client: queryClient }, children);
+  function Wrapper({ children }: { children: ReactNode }) {
+    return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+  }
+
+  Wrapper.displayName = 'TestWrapper';
+  return Wrapper;
 };
 
 describe('Movies Page', () => {
   it('should render protected route wrapper', () => {
-    render(createElement(Movies), { wrapper: createWrapper() });
-
+    render(<Movies />, { wrapper: createWrapper() });
     expect(screen.getByTestId('protected-route')).toBeInTheDocument();
   });
 
   it('should render movies page content inside protected route', () => {
-    render(createElement(Movies), { wrapper: createWrapper() });
+    render(<Movies />, { wrapper: createWrapper() });
 
     expect(screen.getByTestId('protected-route')).toBeInTheDocument();
     expect(screen.getByTestId('movies-page')).toBeInTheDocument();
+    expect(screen.getByText('Movies Page Content')).toBeInTheDocument();
   });
 
   it('should have correct structure', () => {
-    const { container } = render(createElement(Movies), { wrapper: createWrapper() });
+    const { container } = render(<Movies />, { wrapper: createWrapper() });
 
     const wrapper = container.firstChild;
     expect(wrapper).toBeInTheDocument();
