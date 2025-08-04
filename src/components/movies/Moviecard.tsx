@@ -106,9 +106,11 @@ export function MovieCard({ movie }: MovieCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  
+
   return (
     <Card
-      className={`bg-gray-800/80 border-gray-700 transition-all duration-300 cursor-pointer group overflow-hidden h-full flex flex-col ${
+      className={`bg-gray-900/80 border-gray-700 transition-all duration-300 cursor-pointer group overflow-hidden  ${
         isHovered ? 'transform scale-105 shadow-2xl shadow-yellow-400/20 border-yellow-400/50' : ''
       }`}
       onMouseEnter={() => setIsHovered(true)}
@@ -126,25 +128,25 @@ export function MovieCard({ movie }: MovieCardProps) {
         </div>
 
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent" />
 
         <CardHeader className="relative z-10">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-primary font-semibold">
+            <span className="text-sm text-yellow-400 font-semibold">
               {episodeTitles[movie.episode_id] || `Episode ${movie.episode_id}`}
             </span>
-            <div className="flex items-center text-muted-foreground text-sm">
+            <div className="flex items-center text-gray-400 text-sm">
               <Calendar className="h-4 w-4 mr-1" />
               {formatDate(movie.release_date)}
             </div>
           </div>
-          <CardTitle className="text-xl text-foreground group-hover:text-primary transition-colors duration-300">
+          <CardTitle className="text-xl text-white group-hover:text-yellow-400 transition-colors duration-300">
             {movie.title}
           </CardTitle>
         </CardHeader>
 
-        <CardContent className="relative z-10 flex-1 flex flex-col">
-          <CardDescription className="text-muted-foreground mb-4 leading-relaxed flex-1">
+        <CardContent className="relative z-10 ">
+          <CardDescription className="text-gray-300 mb-4 leading-relaxed min-h-[4rem]">
             {truncateText(movie.opening_crawl)}
           </CardDescription>
 
@@ -153,18 +155,18 @@ export function MovieCard({ movie }: MovieCardProps) {
               <Button
                 variant="outline"
                 size="sm"
-                className="w-full border-primary/50 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 bg-transparent mt-auto"
+                className="w-full border-yellow-400/50 text-yellow-400 hover:bg-yellow-400 hover:text-black transition-all duration-300 bg-transparent"
               >
                 <Info className="h-4 w-4 mr-2" />
                 More Info
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-7xl max-h-[95vh] overflow-y-auto bg-background border-border">
+            <DialogContent className="max-w-7xl max-h-[95vh] overflow-y-auto bg-gray-900 border-gray-700">
               <DialogHeader>
-                <DialogTitle className="text-3xl text-primary mb-2">
+                <DialogTitle className="text-3xl text-yellow-400 mb-2">
                   {episodeTitles[movie.episode_id] || `Episode ${movie.episode_id}`}: {movie.title}
                 </DialogTitle>
-                <DialogDescription className="text-muted-foreground text-lg">
+                <DialogDescription className="text-gray-300 text-lg">
                   Released on {formatDate(movie.release_date)}
                 </DialogDescription>
               </DialogHeader>
@@ -176,7 +178,7 @@ export function MovieCard({ movie }: MovieCardProps) {
                     <img
                       src={getMoviePoster(movie.episode_id, movie.title)}
                       alt={`${movie.title} poster`}
-                      className="w-full rounded-xl shadow-card border border-border"
+                      className="w-full rounded-xl shadow-2xl shadow-yellow-400/10 border border-gray-700"
                       crossOrigin="anonymous"
                     />
                   </div>
