@@ -106,8 +106,6 @@ export function MovieCard({ movie }: MovieCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  
-
   return (
     <Card
       className={`bg-gray-900/80 border-gray-700 transition-all duration-300 cursor-pointer group overflow-hidden  ${
