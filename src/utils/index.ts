@@ -37,7 +37,7 @@ export function getEpisodeTitle(episodeId: number): string {
 
 export function getMoviePoster(episodeId: number, title: string): string {
   const posterUrls: Record<number, string> = {
-    1: '/images/episode-1-poster.jpg',
+    1: '/images/episode-I-poster.jpg',
     2: '/images/episode-2-poster.jpg',
     3: '/images/episode-3-poster.jpg',
     4: '/images/episode-4-poster.jpg',
