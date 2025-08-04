@@ -35,10 +35,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Return user without password
-    const { password: _, ...userWithoutPassword } = user;
+    const { ...userWithoutPassword } = user;
 
     return NextResponse.json({ user: userWithoutPassword });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

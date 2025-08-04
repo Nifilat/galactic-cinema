@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import LoginForm from '@/components/auth/LoginForm';
 import { Provider } from 'react-redux';
@@ -13,7 +13,7 @@ jest.mock('sonner', () => ({
 const mockStore = configureStore([]);
 
 describe('LoginForm', () => {
-  let store: any;
+  let store: ReturnType<typeof mockStore>;
 
   beforeEach(() => {
     store = mockStore({
