@@ -1,4 +1,3 @@
-// __tests__/components/LoginContainer.test.tsx
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
@@ -11,7 +10,6 @@ jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
 
-// Define proper types for your store state
 interface MockState {
   auth: {
     isAuthenticated: boolean;
@@ -22,7 +20,6 @@ interface MockState {
   };
 }
 
-// ✅ Create typed mock store
 const mockStore = configureStore<MockState>([]);
 
 describe('LoginContainer', () => {
@@ -31,8 +28,7 @@ describe('LoginContainer', () => {
 
   beforeEach(() => {
     (useRouter as jest.Mock).mockReturnValue({ push });
-    
-    // ✅ Now the types match perfectly
+
     store = mockStore({
       auth: {
         isAuthenticated: false,
@@ -42,7 +38,7 @@ describe('LoginContainer', () => {
         loading: false,
       },
     });
-    
+
     store.dispatch = jest.fn();
   });
 
@@ -62,7 +58,6 @@ describe('LoginContainer', () => {
   });
 
   it('redirects if authenticated', () => {
-    // ✅ Create a new typed store instance for this specific test
     const authenticatedStore = mockStore({
       auth: {
         isAuthenticated: true,
@@ -92,9 +87,6 @@ describe('LoginContainer', () => {
     expect(store.dispatch).toHaveBeenCalledWith(clearError());
   });
 
-  // Additional test cases for better coverage
-  // ✅ Removed loading state test since component doesn't implement it
-
   it('displays error message when auth has error', () => {
     const errorStore = mockStore({
       auth: {
@@ -117,7 +109,9 @@ describe('LoginContainer', () => {
 });
 
 // ✅ Alternative approach: Create a properly typed helper function
-export const createMockStore = (overrides: Partial<MockState> = {}): MockStoreEnhanced<MockState, object> => {
+export const createMockStore = (
+  overrides: Partial<MockState> = {}
+): MockStoreEnhanced<MockState, object> => {
   const defaultState: MockState = {
     auth: {
       isAuthenticated: false,
