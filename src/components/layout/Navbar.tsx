@@ -62,11 +62,11 @@ export function Navigation() {
         </div>
 
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-4 pt-4 border-t border-gray-700 animate-fadeIn">
-            <div className="flex flex-col space-y-4">
-              <div className="flex items-center space-x-2 text-gray-300 px-2">
+          <div className="absolute top-full left-0 right-0 z-50 bg-black border-t border-gray-700 animate-fadeIn md:hidden">
+            <div className="flex flex-col space-y-4 p-4">
+              <div className="flex items-center space-x-2 text-gray-300">
                 <User className="h-4 w-4" />
-                <span className="text-sm">Welcome, {user?.username}</span>
+                <span className="text-sm">Welcome, {user?.username?.trim() || 'Guest'}</span>
               </div>
 
               <Button
