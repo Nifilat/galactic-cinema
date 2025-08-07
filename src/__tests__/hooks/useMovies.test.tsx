@@ -4,6 +4,12 @@ import { ReactNode, createElement } from 'react';
 import { useMovies, useEntityNames } from '@/hooks/useMovies';
 
 global.fetch = jest.fn();
+jest.mock('sonner', () => ({
+  toast: {
+    success: jest.fn(),
+    warning: jest.fn(),
+  },
+}));
 
 const mockMoviesResponse = {
   result: [

@@ -19,7 +19,6 @@ const fetchMovies = async (): Promise<Movie[]> => {
     toast.success('Movies loaded successfully!', {
       description: 'Data fetched from SWAPI.tech API',
     });
-
     return data.result.map(item => item.properties);
   } catch (error) {
     console.warn('API fetch failed, using fallback data:', error);

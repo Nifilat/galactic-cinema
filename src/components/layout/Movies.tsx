@@ -6,7 +6,7 @@ import { useMovies } from '@/hooks/useMovies';
 import MoviesLayout from './MoviesLayout';
 
 export default function MoviesPage() {
-  const { data: movies = [], isLoading} = useMovies();
+  const { data: movies = [], isLoading } = useMovies();
 
   if (isLoading) {
     return (
