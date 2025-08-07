@@ -1,23 +1,13 @@
 'use client';
 
+import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useDispatch, useSelector } from 'react-redux';
 import { clearError } from '@/lib/store/authSlice';
-import type { RootState } from '@/lib/store';
 import LoginForm from '@/components/auth/LoginForm';
 import Logo from '@/components/ui/logo';
 
 export default function LoginContainer() {
-  const router = useRouter();
   const dispatch = useDispatch();
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push('/movies');
-    }
-  }, [isAuthenticated, router]);
 
   useEffect(() => {
     dispatch(clearError());
