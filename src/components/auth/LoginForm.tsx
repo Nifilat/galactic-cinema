@@ -17,6 +17,7 @@ import { RootState } from '@/lib/store';
 import { getToastClass } from '@/utils/toastVariants';
 import { useRouter } from 'next/navigation';
 import { formConfig } from '@/constants/authForm';
+import { loginSchema, registerSchema } from '@/utils/validation/authSchema';
 
 type Mode = 'login' | 'register';
 
@@ -38,7 +39,7 @@ export default function LoginForm() {
     resolver: zodResolver(config.schema),
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: z.infer<typeof loginSchema> | z.infer<typeof registerSchema>) => {
     try {
       if (tab === 'login') {
         const user = users.find(
