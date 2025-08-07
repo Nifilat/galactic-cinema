@@ -17,6 +17,7 @@ export interface Movie {
 
 export interface MovieCardProps {
   movie: Movie;
+  index?: number;
 }
 
 export interface SwapiResponse {
