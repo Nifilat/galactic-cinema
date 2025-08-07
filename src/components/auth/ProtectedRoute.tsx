@@ -4,12 +4,9 @@ import { RootState } from '@/lib/store';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import LoadingSpinner from '@/components/ui/loading-spinner';
+import { RouteGuardProps } from './types';
 
-interface ProtectedRouteProps {
-  children: React.ReactNode;
-}
-
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+const RouteGuard: React.FC<RouteGuardProps> = ({ children, requireAuth = true, redirectTo }) => {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
@@ -17,31 +14,34 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-      if (!isAuthenticated) {
-        router.replace('/login');
+
+      const shouldRedirect = requireAuth ? !isAuthenticated : isAuthenticated;
+
+      if (shouldRedirect && redirectTo) {
+        router.replace(redirectTo);
       }
     }, 100);
 
     return () => clearTimeout(timer);
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, router, requireAuth, redirectTo]);
+
+  const LoadingScreen = (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
+      <LoadingSpinner size="lg" />
+    </div>
+  );
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
-        <LoadingSpinner size="lg" />
-      </div>
-    );
+    return LoadingScreen;
   }
 
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
-        <LoadingSpinner size="lg" />
-      </div>
-    );
+  const shouldShowContent = requireAuth ? isAuthenticated : !isAuthenticated;
+
+  if (!shouldShowContent) {
+    return LoadingScreen;
   }
 
-  return <>{children}</>;
+  return children;
 };
 
-export default ProtectedRoute;
+export default RouteGuard;

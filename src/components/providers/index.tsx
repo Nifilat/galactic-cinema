@@ -6,13 +6,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { store, persistor } from '../../lib/store';
 import LoadingSpinner from '../ui/loading-spinner';
 import { Toaster } from '../ui/sonner';
+import RouteGuard from '../auth/ProtectedRoute';
+import { ProvidersProps } from './types';
 
-interface ProvidersProps {
-  children: React.ReactNode;
-}
-
-const Providers: React.FC<ProvidersProps> = ({ children }) => {
-  // Create QueryClient in client component to avoid serialization issues
+const Providers: React.FC<ProvidersProps> = ({ children, requireAuth, redirectTo }) => {
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -27,18 +24,23 @@ const Providers: React.FC<ProvidersProps> = ({ children }) => {
       })
   );
 
+  const LoadingScreen = (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
+      <LoadingSpinner size="lg" />
+    </div>
+  );
+
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <PersistGate
-          loading={
-            <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
-              <LoadingSpinner size="lg" />
-            </div>
-          }
-          persistor={persistor}
-        >
-          {children}
+        <PersistGate loading={LoadingScreen} persistor={persistor}>
+          {requireAuth !== undefined ? (
+            <RouteGuard requireAuth={requireAuth} redirectTo={redirectTo}>
+              {children}
+            </RouteGuard>
+          ) : (
+            children
+          )}
           <Toaster />
         </PersistGate>
       </Provider>
