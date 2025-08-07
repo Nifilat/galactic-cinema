@@ -1,26 +1,18 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { RootState } from '@/lib/store';
-import LoadingSpinner from '../components/ui/loading-spinner';
-import { useSelector } from 'react-redux';
+import LoadingSpinner from '@/components/ui/loading-spinner';
+import { redirect } from 'next/navigation';
 
 export default function HomePage() {
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
-  const router = useRouter();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.replace('/movies');
-    } else {
-      router.replace('/login');
-    }
-  }, [isAuthenticated, router]);
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
+    <div className="flex flex-col items-center justify-center min-h-screen gap-6">
       <LoadingSpinner size="lg" />
+      <button
+        onClick={() => redirect('/login')}
+        className="px-4 py-2 text-primary-foreground bg-primary text-white rounded-md hover:bg-primary/0.9 transition-colors cursor-pointer border border-ring"
+      >
+        Go to Login
+      </button>
     </div>
   );
 }

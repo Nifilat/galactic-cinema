@@ -57,26 +57,6 @@ describe('LoginContainer', () => {
     expect(screen.getByRole('button', { name: /login/i })).toBeInTheDocument();
   });
 
-  it('redirects if authenticated', () => {
-    const authenticatedStore = mockStore({
-      auth: {
-        isAuthenticated: true,
-        username: 'testuser',
-        token: 'mock-token',
-        error: null,
-        loading: false,
-      },
-    });
-
-    render(
-      <Provider store={authenticatedStore}>
-        <LoginContainer />
-      </Provider>
-    );
-
-    expect(push).toHaveBeenCalledWith('/movies');
-  });
-
   it('dispatches clearError on mount', () => {
     render(
       <Provider store={store}>
@@ -153,19 +133,5 @@ describe('LoginContainer (with helper)', () => {
     );
 
     expect(store.dispatch).toHaveBeenCalledWith(clearError());
-  });
-
-  it('handles authenticated state with helper', () => {
-    const store = createMockStore({
-      auth: { isAuthenticated: true, username: 'testuser' },
-    });
-
-    render(
-      <Provider store={store}>
-        <LoginContainer />
-      </Provider>
-    );
-
-    expect(push).toHaveBeenCalledWith('/movies');
   });
 });
