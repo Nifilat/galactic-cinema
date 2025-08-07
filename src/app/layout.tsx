@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { ThemeProvider } from 'next-themes';
 import './globals.css';
 import Providers from '../components/providers';
 
@@ -26,11 +25,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} min-h-screen`} suppressHydrationWarning>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
-            <Providers>{children}</Providers>
-          </div>
-        </ThemeProvider>
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+          <Providers>{children}</Providers>
+        </div>
       </body>
     </html>
   );

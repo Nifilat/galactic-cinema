@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import { ThemeProvider } from 'next-themes';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -15,8 +16,8 @@ const Providers: React.FC<ProvidersProps> = ({ children, requireAuth, redirectTo
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 1000 * 60 * 5, // 5 minutes
-            gcTime: 1000 * 60 * 60, // 1 hour
+            staleTime: 1000 * 60 * 5,
+            gcTime: 1000 * 60 * 60,
             retry: 2,
             refetchOnWindowFocus: false,
           },
@@ -31,20 +32,22 @@ const Providers: React.FC<ProvidersProps> = ({ children, requireAuth, redirectTo
   );
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
-        <PersistGate loading={LoadingScreen} persistor={persistor}>
-          {requireAuth !== undefined ? (
-            <RouteGuard requireAuth={requireAuth} redirectTo={redirectTo}>
-              {children}
-            </RouteGuard>
-          ) : (
-            children
-          )}
-          <Toaster />
-        </PersistGate>
-      </Provider>
-    </QueryClientProvider>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <PersistGate loading={LoadingScreen} persistor={persistor}>
+            {requireAuth !== undefined ? (
+              <RouteGuard requireAuth={requireAuth} redirectTo={redirectTo}>
+                {children}
+              </RouteGuard>
+            ) : (
+              children
+            )}
+            <Toaster />
+          </PersistGate>
+        </Provider>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 };
 
