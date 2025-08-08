@@ -84,3 +84,10 @@ export interface LoadingState {
   vehicles: boolean;
   planets: boolean;
 }
+
+export interface FullscreenLoaderProps {
+  size?: 'sm' | 'md' | 'lg';
+  showText?: boolean;
+  text?: string;
+  className?: string;
+}

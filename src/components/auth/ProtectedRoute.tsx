@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import { RouteGuardProps } from './types';
+import FullscreenLoader from '../layout/Loader';
 
 const RouteGuard: React.FC<RouteGuardProps> = ({ children, requireAuth = true, redirectTo }) => {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
@@ -25,20 +26,14 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children, requireAuth = true, r
     return () => clearTimeout(timer);
   }, [isAuthenticated, router, requireAuth, redirectTo]);
 
-  const LoadingScreen = (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
-      <LoadingSpinner size="lg" />
-    </div>
-  );
-
   if (isLoading) {
-    return LoadingScreen;
+    return <FullscreenLoader text="Authenticating..." />;
   }
 
   const shouldShowContent = requireAuth ? isAuthenticated : !isAuthenticated;
 
   if (!shouldShowContent) {
-    return LoadingScreen;
+    return <FullscreenLoader text="Redirecting..." />;
   }
 
   return children;
