@@ -1,23 +1,45 @@
 import React from 'react';
-import { Loader2 } from 'lucide-react';
 
 interface LoadingSpinnerProps {
   size?: 'sm' | 'md' | 'lg';
+  className?: string;
+  showText?: boolean;
   text?: string;
 }
 
-const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 'md', text = 'Loading...' }) => {
+const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
+  size = 'md',
+  className = '',
+  showText = true,
+  text = 'Loading the galaxy...',
+}) => {
   const sizeClasses = {
-    sm: 'h-4 w-4',
-    md: 'h-8 w-8',
-    lg: 'h-12 w-12',
+    sm: 'w-8 h-8',
+    md: 'w-16 h-16',
+    lg: 'w-24 h-24',
+  };
+
+  const textSizeClasses = {
+    sm: 'text-sm',
+    md: 'text-lg',
+    lg: 'text-xl',
   };
 
   return (
-    <div className="text-center mb-8 animate-slideUp">
+    <div className={`text-center animate-slide-up ${className}`}>
+      <div className="relative">
+        {/* Spinning outer ring */}
+        <div
+          className={`${sizeClasses[size]} border-4 border-yellow-400/30 border-t-yellow-400 rounded-full animate-spin mx-auto mb-4`}
+        ></div>
+
+        {/* Inner pulsing dot */}
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-yellow-400 rounded-full animate-pulse"></div>
+      </div>
+
       <svg
         viewBox="0 0 1347.6 227.4"
-        className="h-16 w-auto text-yellow-400 mx-auto mb-4 animate-glow"
+        className={`${size === 'sm' ? 'h-8' : size === 'md' ? 'h-12' : 'h-16'} w-auto text-yellow-400 mx-auto mb-4 animate-glow`}
         fill="currentColor"
       >
         <g>
@@ -27,7 +49,23 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 'md', text = 'Lo
           </g>
         </g>
       </svg>
-      <p className="text-gray-300">Enter the galaxy far, far away...</p>
+
+      {showText && (
+        <>
+          <p className={`text-gray-300 font-medium ${textSizeClasses[size]}`}>{text}</p>
+          <div className="mt-2 flex justify-center space-x-1">
+            <div className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce"></div>
+            <div
+              className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce"
+              style={{ animationDelay: '0.1s' }}
+            ></div>
+            <div
+              className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce"
+              style={{ animationDelay: '0.2s' }}
+            ></div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

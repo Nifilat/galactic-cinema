@@ -1,28 +1,42 @@
 'use client';
-
-import React, { useEffect } from 'react';
-import { useAuth } from '../../hooks/useAuth';
+import React, { useEffect, useState } from 'react';
+import { RootState } from '@/lib/store';
+import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
+import LoadingSpinner from '@/components/ui/loading-spinner';
+import { RouteGuardProps } from './types';
+import FullscreenLoader from '../layout/Loader';
 
-interface ProtectedRouteProps {
-  children: React.ReactNode;
-}
-
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+const RouteGuard: React.FC<RouteGuardProps> = ({ children, requireAuth = true, redirectTo }) => {
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.replace('/login');
-    }
-  }, [isAuthenticated, router]);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
 
-  if (!isAuthenticated) {
-    return null;
+      const shouldRedirect = requireAuth ? !isAuthenticated : isAuthenticated;
+
+      if (shouldRedirect && redirectTo) {
+        router.replace(redirectTo);
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [isAuthenticated, router, requireAuth, redirectTo]);
+
+  if (isLoading) {
+    return <FullscreenLoader text="Authenticating..." />;
   }
 
-  return <>{children}</>;
+  const shouldShowContent = requireAuth ? isAuthenticated : !isAuthenticated;
+
+  if (!shouldShowContent) {
+    return <FullscreenLoader text="Redirecting..." />;
+  }
+
+  return children;
 };
 
-export default ProtectedRoute;
+export default RouteGuard;

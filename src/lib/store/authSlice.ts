@@ -1,28 +1,38 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AuthState } from '../types';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { AuthState, User } from './types';
+import { mockUsers } from '@/constants/mockUsers';
 
 const initialState: AuthState = {
+  user: null,
   isAuthenticated: false,
-  username: '',
-  token: null,
+  isLoading: false,
+  error: null,
+  users: mockUsers,
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<{ username: string; token: string }>) => {
+    login: (state, action) => {
+      state.user = action.payload;
       state.isAuthenticated = true;
-      state.username = action.payload.username;
-      state.token = action.payload.token;
+      state.error = null;
     },
+
     logout: state => {
+      state.user = null;
       state.isAuthenticated = false;
-      state.username = '';
-      state.token = null;
+      state.error = null;
+    },
+    clearError: state => {
+      state.error = null;
+    },
+    updateUsers: (state, action: PayloadAction<User>) => {
+      state.users.push(action.payload);
     },
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, clearError, updateUsers } = authSlice.actions;
 export default authSlice.reducer;
